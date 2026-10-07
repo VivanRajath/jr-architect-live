@@ -5,6 +5,9 @@ const LIVE_URL = 'https://inspiron.tail958877.ts.net';
 const NTFY_TOPIC = 'jr-architect-wake-m043xgr8s5';
 const PING_COOLDOWN_MS = 10 * 60 * 1000;
 
+// The shared beta code (JR_BETA_CODE on the server), shown to visitors so they can sign in.
+const BETA_CODE = 'jr-0771ec14';
+
 const liveLink = document.getElementById('live-link');
 liveLink.href = LIVE_URL;
 document.getElementById('live-url-text').textContent = LIVE_URL;
@@ -13,38 +16,40 @@ const links = document.getElementById('links');
 document.getElementById('menu').addEventListener('click', () => links.classList.toggle('open'));
 links.addEventListener('click', (e) => { if (e.target.tagName === 'A') links.classList.remove('open'); });
 
-// Tells the owner someone wants to try the demo, at most once every ten minutes per visitor.
-const pingBtn = document.getElementById('ping-btn');
+// Opening the demo also tells the owner someone wants to try it, at most once every ten minutes per visitor.
 const pingStatus = document.getElementById('ping-status');
 function lastPing() {
   try { return Number(localStorage.getItem('jr-ping-at')) || 0; } catch { return 0; }
 }
-function markPinged() {
+liveLink.addEventListener('click', () => {
+  if (Date.now() - lastPing() < PING_COOLDOWN_MS) return;
   try { localStorage.setItem('jr-ping-at', String(Date.now())); } catch { /* storage blocked */ }
-}
-function showPinged() {
-  pingBtn.disabled = true;
-  pingBtn.textContent = 'Notified';
-  pingStatus.textContent = 'Thanks, I have been notified and will switch the demo on. Try the live demo in a few minutes.';
-}
-if (Date.now() - lastPing() < PING_COOLDOWN_MS) showPinged();
-pingBtn.addEventListener('click', async () => {
-  pingBtn.disabled = true;
-  pingBtn.textContent = 'Sending…';
   const when = new Date().toLocaleString();
   const from = document.referrer ? ` (came from ${document.referrer})` : '';
+  // A plain text POST needs no preflight; keepalive lets it finish while the new tab opens.
+  const url = `https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}?title=${encodeURIComponent('Someone is opening Jr Architect')}&tags=computer&priority=high`;
+  fetch(url, { method: 'POST', body: `A visitor opened the live demo at ${when}${from}. If the laptop is asleep, start the tunnel.`, keepalive: true }).catch(() => {});
+  pingStatus.textContent = "Opening Jr Architect in a new tab. If it doesn't load, I've been notified and will switch it on shortly.";
+});
+
+const betaBtn = document.getElementById('beta-btn');
+const betaBox = document.getElementById('beta-box');
+const betaCopy = document.getElementById('beta-copy');
+document.getElementById('beta-code').textContent = BETA_CODE;
+betaBtn.addEventListener('click', () => {
+  betaBox.hidden = !betaBox.hidden;
+  betaBtn.setAttribute('aria-expanded', String(!betaBox.hidden));
+  betaBtn.textContent = betaBox.hidden ? 'Show beta code' : 'Hide beta code';
+});
+betaCopy.addEventListener('click', async () => {
   try {
-    // A plain text POST needs no preflight; ntfy takes the title and tags as query parameters.
-    const url = `https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}?title=${encodeURIComponent('Someone wants to try Jr Architect')}&tags=computer&priority=high`;
-    const res = await fetch(url, { method: 'POST', body: `A visitor pressed the button at ${when}${from}. Open the laptop and start the tunnel.` });
-    if (!res.ok) throw new Error(String(res.status));
-    markPinged();
-    showPinged();
+    await navigator.clipboard.writeText(BETA_CODE);
+    betaCopy.textContent = 'Copied';
   } catch {
-    pingBtn.disabled = false;
-    pingBtn.textContent = 'Let me know you want to try it';
-    pingStatus.textContent = 'The notification could not be sent from this network. Please try again in a moment.';
+    getSelection().selectAllChildren(document.getElementById('beta-code'));
+    betaCopy.textContent = 'Press Ctrl+C';
   }
+  setTimeout(() => { betaCopy.textContent = 'Copy'; }, 1800);
 });
 
 // Generated-app gallery tabs.

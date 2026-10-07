@@ -544,13 +544,17 @@
           <h2>Try it yourself</h2>
           <p class="live-lead">I'm on a free tier and I make the best of what I have. The platform runs on my own laptop and is shared through Tailscale Funnel, so it is only online while my laptop is open.</p>
           <div class="live-actions">
-            <button class="btn btn-lg" type="button" id="ping-btn">Let me know you want to try it</button>
-            <a class="btn btn-lg btn-ghost" id="live-link" href="#" target="_blank" rel="noopener">Open the live demo</a>
+            <a class="btn btn-lg" id="live-link" href="#" target="_blank" rel="noopener">Open Jr Architect</a>
+            <button class="btn btn-lg btn-ghost" type="button" id="beta-btn" aria-expanded="false" aria-controls="beta-box">Show beta code</button>
+          </div>
+          <div class="beta-box" id="beta-box" hidden>
+            <code id="beta-code"></code>
+            <button class="btn btn-sm" type="button" id="beta-copy">Copy</button>
           </div>
           <p class="ping-status" id="ping-status" role="status" aria-live="polite"></p>
           <div class="note">
-            <p><b>How this works.</b> Pressing the first button sends me a notification on my phone, so I can open my laptop and switch the tunnel on. Give it a few minutes, then open the live demo.</p>
-            <p>If the demo doesn't load yet, the laptop is still waking up. Every screenshot on this page is from the same build, so the walkthrough above shows exactly what you'll see.</p>
+            <p><b>How this works.</b> Opening Jr Architect also sends me a notification on my phone, so if the laptop is asleep I can switch the tunnel on. If the page doesn't load yet, give it a few minutes and try again.</p>
+            <p>To sign in, copy the beta code and paste it on the sign-in page, or continue with Google or GitHub. Every screenshot on this page is from the same build, so the walkthrough above shows exactly what you'll see.</p>
           </div>
           <p class="live-url"><code id="live-url-text"></code></p>
         </div>

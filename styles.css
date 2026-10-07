@@ -203,6 +203,9 @@ p { margin: 0; }
 .live-lead { max-width: 620px; margin: -12px auto 28px; color: var(--muted); font-size: 17px; }
 .live-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 .live-actions .btn:disabled { opacity: .7; cursor: default; transform: none; }
+.beta-box { display: inline-flex; align-items: center; gap: 12px; margin-top: 18px; padding: 8px 8px 8px 16px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--bg); }
+.beta-box[hidden] { display: none; }
+.beta-box code { font: 600 18px "JetBrains Mono", monospace; letter-spacing: .04em; user-select: all; }
 .ping-status { min-height: 24px; margin-top: 16px; color: var(--accent-2); font-size: 15px; }
 button.btn { font-family: inherit; cursor: pointer; }
 
