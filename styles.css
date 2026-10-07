@@ -193,6 +193,8 @@ p { margin: 0; }
 .pick { padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); display: grid; gap: 8px; align-content: start; }
 .pick b { font-size: 17px; }
 .pick p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.picked.aligned { grid-template-columns: repeat(4, 1fr); }
+.picked.aligned .pick { border-color: var(--accent, var(--line)); }
 .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 36px; }
 .road { position: relative; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); display: grid; gap: 8px; align-content: start; }
 .road b { font-size: 16px; }

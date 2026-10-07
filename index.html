@@ -21,6 +21,7 @@
         <a href="#ownership">Ownership</a>
         <a href="#sandboxes">Sandboxes</a>
         <a href="#architecture">Architecture</a>
+        <a href="#production">Production</a>
         <a href="#next">Roadmap</a>
         <a href="#live" class="btn btn-sm">Try it</a>
       </nav>
@@ -369,7 +370,7 @@
       <div class="wrap">
         <p class="eyebrow">Technical architecture</p>
         <h2>How it fits together</h2>
-        <p class="sub">One Go binary serves the UI, owns the sandboxes and proxies everything else. A Node agent service runs the agents and the OpenGAP team. Generated apps call their workflows over webhooks.</p>
+        <p class="sub">One Go binary serves the UI, owns the sandboxes and proxies everything else. A Node agent service runs the agents and the OpenGAP team. Both keep their records in MongoDB. Generated apps call their workflows over webhooks.</p>
 
         <figure class="diagram" data-zoom>
           <svg viewBox="0 0 1100 640" role="img" aria-label="Architecture diagram">
@@ -388,8 +389,9 @@
             <g class="node"><rect x="290" y="136" width="155" height="66" rx="10"/><text x="367" y="160">Builder</text><text class="s" x="367" y="177">questions · plan · design</text><text class="s" x="367" y="191">codegen · heal · repair</text></g>
             <g class="node"><rect x="455" y="136" width="155" height="66" rx="10"/><text x="532" y="160">Detector</text><text class="s" x="532" y="177">20+ stacks · ports</text><text class="s" x="532" y="191">install and start cmds</text></g>
             <g class="node"><rect x="290" y="218" width="155" height="66" rx="10"/><text x="367" y="242">Lifecycle</text><text class="s" x="367" y="259">clone · approve · run</text><text class="s" x="367" y="273">idle reaper · limits</text></g>
-            <g class="node"><rect x="455" y="218" width="155" height="66" rx="10"/><text x="532" y="242">Git + GitHub</text><text class="s" x="532" y="259">sync · push · PR · graph</text><text class="s" x="532" y="273">git runs in the sandbox</text></g>
+            <g class="node"><rect x="455" y="218" width="155" height="66" rx="10"/><text x="532" y="242">Git + GitHub</text><text class="s" x="532" y="259">sync · push · PR · graph</text><text class="s" x="532" y="273">token never in the sandbox</text></g>
             <g class="node"><rect x="290" y="300" width="320" height="56" rx="10"/><text x="450" y="324">Key pool + model router</text><text class="s" x="450" y="341">your keys first · per-key limits · daily rest</text></g>
+            <g class="node"><rect x="290" y="364" width="320" height="46" rx="10"/><text x="450" y="384">MongoDB</text><text class="s" x="450" y="400">users · projects · agents · workflows · runs</text></g>
             <g class="node accent"><rect x="290" y="420" width="155" height="70" rx="10"/><text x="367" y="446">Preview proxy</text><text class="s" x="367" y="463">host to sandbox port</text><text class="s" x="367" y="477">redirect rewrite</text></g>
             <g class="node accent"><rect x="455" y="420" width="155" height="70" rx="10"/><text x="532" y="446">Agent proxy</text><text class="s" x="532" y="463">/agent/* REST + WS</text><text class="s" x="532" y="477">loopback only</text></g>
             <g class="node"><rect x="290" y="530" width="320" height="66" rx="10"/><text x="450" y="556">GitAgent / OpenGAP spec</text><text class="s" x="450" y="573">.gitagent/ agents · hooks · DUTIES.md</text></g>
@@ -421,24 +423,61 @@
           <figcaption>Solid lines are requests. Dashed lines are the preview iframe, and an app calling its workflows by webhook.</figcaption>
         </figure>
 
-        <div class="grid">
+        <div class="grid three">
           <article class="card"><h3>Sandboxes</h3><p>One container per project from a stack image, with <code>--memory 1g --cpus 1 --pids-limit 100</code>. Only <code>/workspace</code> is mounted, and idle sandboxes expire.</p></article>
           <article class="card"><h3>Agent harness</h3><p>Agents are versioned definitions with input and output schemas. Input is validated and coerced, tools are limited per agent, and a wrong-shaped answer is retried with a correction.</p></article>
           <article class="card"><h3>OpenGAP team</h3><p>Agents from <code>.gitagent/agents/</code> are routed by name, owned files or a classifier, get attempts, hand off with a compiled brief and stop at a terminal agent.</p></article>
           <article class="card"><h3>Guardrails</h3><p>Edit and command guards from <code>hooks/</code> run on the real content. Four are sealed in code; a broken guard file stops a run instead of weakening it.</p></article>
           <article class="card"><h3>Proxy</h3><p>A host-based reverse proxy sends <code>p-&lt;token&gt;</code> hosts to each sandbox. The agent service is reached only through <code>/agent/*</code> on loopback.</p></article>
-          <article class="card"><h3>GitHub</h3><p>Git runs inside the sandbox, never on the host. The token travels only in environment variables and is encrypted at rest.</p></article>
+          <article class="card"><h3>GitHub</h3><p>Commit, status and history run in the sandbox without any credentials. Fetch and push run in a separate, short-lived git container that never runs repository code, so the token is never where your repo's code could read it. It is encrypted at rest.</p></article>
+          <article class="card"><h3>Database</h3><p>MongoDB holds users, sign-ins, projects, agents and their versions, workflows, runs, agent memory, API keys and playground chats, each with its own id. Secrets are encrypted before they are stored; API keys are kept only as hashes.</p></article>
           <article class="card"><h3>Deployment</h3><p>One Go binary with the UI and templates embedded, the Node service beside it, and Docker on the host. Any Linux machine with root can run it.</p></article>
-          <article class="card"><h3>Scaling</h3><p>The server keeps little state beyond its data folder, so more Docker hosts can sit behind the proxy. Per-user model limits keep one person from slowing everyone.</p></article>
+          <article class="card"><h3>Scaling</h3><p>Durable state lives in MongoDB rather than on one machine's disk, so more servers and Docker hosts can share it. Per-user model limits keep one person from slowing everyone.</p></article>
         </div>
       </div>
     </section>
 
-    <section id="architect" class="section">
+    <section id="production" class="section">
+      <div class="wrap">
+        <p class="eyebrow">Production notes</p>
+        <h2>Built to treat every repo, prompt and browser as untrusted</h2>
+        <p class="sub">An app builder runs code it did not write. So I audited Jr Architect the way an attacker would look at it, wrote down every weakness with a severity, and fixed the most serious ones first.</p>
+        <div class="grid">
+          <article class="card"><h3>A written security audit</h3><p>Every part of the system was mapped: who can call what, what each piece trusts, and what a hostile repository, a manipulated browser or a misled AI model could reach. Each weakness is ranked from critical to low, with the fix order.</p></article>
+          <article class="card"><h3>Your GitHub token stays out of reach</h3><p>The most serious finding: during a push, a hostile repository could read the token. Now fetch and push happen in a separate container that runs no repository code, and a test plants every known trick (hooks, filters, proxies, helpers) to prove nothing sees it.</p></article>
+          <article class="card"><h3>The AI proposes, the server decides</h3><p>When the coding agent wants to run a command, a server-side policy decides. Touching git internals, secrets or the container engine is refused. Network access, installs and deletes wait for your approval. Ordinary work like tests and builds just runs.</p></article>
+          <article class="card"><h3>The browser is not trusted</h3><p>Who you are comes from your sign-in, never from what the page sends. Every request for a sandbox, file, agent or workflow is checked against its owner on the server, so changing an id in a request gets you nothing.</p></article>
+          <article class="card"><h3>Files stay inside the project</h3><p>Every file read and write goes through a guarded root that refuses <code>../</code> paths and symlinks pointing out of the project, so a repository cannot trick the server into touching anything else.</p></article>
+          <article class="card"><h3>Isolated sandboxes</h3><p>Each project runs in its own container with CPU, memory and process limits, no extra privileges and no access to the container engine. The public deployment adds rootless containers, a firewall and a fixed disk quota.</p></article>
+          <article class="card"><h3>Secrets never reach the page</h3><p>Provider keys, GitHub tokens and OAuth secrets live only on the server, encrypted at rest, and are redacted from any error message that could reach you.</p></article>
+          <article class="card"><h3>Tested, including the attacks</h3><p>Over 170 automated tests, including negative ones: another user's ids, path escapes, planted git traps and refused agent commands. The agent and workflow tests run both with MongoDB and without it.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="architect" class="section alt">
       <div class="wrap">
         <p class="eyebrow">Inspired by architect.new</p>
         <h2>What I picked from architect.new, and how it fits Jr Architect</h2>
-        <p class="sub">architect.new showed what an AI app builder should feel like. I took the ideas that matter most to someone who doesn't code, built them on my own stack, and made sure the two can work together. Like architect.new, the core of Jr Architect is written in Go.</p>
+        <p class="sub">architect.new showed what an AI app builder should feel like. I took the ideas that matter most to someone who doesn't code and built them on the same foundations: a Go core and a MongoDB database, so the two think about apps, agents and data in the same way.</p>
+        <div class="picked aligned">
+          <div class="pick">
+            <b>Go at the core</b>
+            <p>Like architect.new, the server is written in Go: one fast binary that serves the app, runs the sandboxes and handles every request.</p>
+          </div>
+          <div class="pick">
+            <b>MongoDB for the data</b>
+            <p>Like architect.new, the data lives in MongoDB. Users, projects, agents, workflows and runs are documents, each with its own id, and agents and workflows keep every saved version.</p>
+          </div>
+          <div class="pick">
+            <b>Agents as first-class records</b>
+            <p>An agent is stored as a versioned definition with its instructions, tools, input and output schemas and guardrails, ready to run on its own or inside a workflow, as in Lyzr's agent model.</p>
+          </div>
+          <div class="pick">
+            <b>Secrets on the server</b>
+            <p>Model keys and GitHub access stay server-side and encrypted, so the app you build and the page you use never hold them.</p>
+          </div>
+        </div>
         <div class="picked">
           <div class="pick">
             <b>A consultant before code</b>
@@ -468,7 +507,7 @@
       </div>
     </section>
 
-    <section id="next" class="section alt">
+    <section id="next" class="section">
       <div class="wrap">
         <p class="eyebrow">What's next</p>
         <h2>Next: mobile apps you can install</h2>
