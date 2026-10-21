@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jr Architect</title>
-  <meta name="description" content="Describe an app and Jr Architect builds it, puts it online, and hands you the code. Developers can bring their own GitHub project and keep working on it with AI helpers.">
+  <title>Monarch</title>
+  <meta name="description" content="Describe an app and Monarch builds it, puts it online, and hands you the code. Developers can bring their own GitHub project and keep working on it with AI helpers.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@
 <body>
   <header class="nav">
     <div class="wrap nav-in">
-      <a class="brand" href="#top"><span class="logo">Jr</span> Jr Architect</a>
+      <a class="brand" href="#top"><span class="logo">M</span> Monarch</a>
       <nav class="links" id="links">
         <a href="#build">Build</a>
         <a href="#develop">Develop</a>
@@ -34,14 +34,14 @@
       <div class="wrap">
         <p class="eyebrow">Architect 2.0 · assessment submission</p>
         <h1>Describe an app.<br>Watch it get <span class="hl">built</span>, go <span class="hl">live</span>, and stay <span class="hl">yours</span>.</h1>
-        <p class="lead">One place for everyone who wants to make software. If you don't code, describe your idea in everyday words: Jr Architect plans it with you, builds the app and its AI helpers, and puts it online. If you do code, bring your own project from GitHub, keep working on it with AI helpers that follow your rules, and send every change back to GitHub.</p>
+        <p class="lead">One place for everyone who wants to make software. If you don't code, describe your idea in everyday words: Monarch plans it with you, builds the app and its AI helpers, and puts it online. If you do code, bring your own project from GitHub, keep working on it with AI helpers that follow your rules, and send every change back to GitHub.</p>
         <div class="cta">
           <a class="btn" href="#live">Try it yourself</a>
           <a class="btn btn-ghost" href="#build">I don't code</a>
           <a class="btn btn-ghost" href="#develop">I'm a developer</a>
         </div>
         <figure class="shot hero-shot" data-zoom>
-          <img src="img/home.webp" alt="Jr Architect home: a greeting, the build composer and your work" width="1418" height="802">
+          <img src="img/home.webp" alt="Monarch home: a greeting, the build composer and your work" width="1418" height="802">
         </figure>
         <ul class="stats">
           <li><b>20+</b><span>kinds of projects it can run</span></li>
@@ -284,7 +284,7 @@
           </article>
           <article class="card">
             <h3>Your ownership</h3>
-            <p>Everything you build is pushed to your own GitHub as a normal repository with a README. Agents and guardrails are plain files in your repo. Nothing ties the code to Jr Architect, and the app keeps running without it.</p>
+            <p>Everything you build is pushed to your own GitHub as a normal repository with a README. Agents and guardrails are plain files in your repo. Nothing ties the code to Monarch, and the app keeps running without it.</p>
           </article>
         </div>
         <div class="card infra">
@@ -441,7 +441,7 @@
       <div class="wrap">
         <p class="eyebrow">Production notes</p>
         <h2>Built to treat every repo, prompt and browser as untrusted</h2>
-        <p class="sub">An app builder runs code it did not write. So I audited Jr Architect the way an attacker would look at it, wrote down every weakness with a severity, and fixed the most serious ones first.</p>
+        <p class="sub">An app builder runs code it did not write. So I audited Monarch the way an attacker would look at it, wrote down every weakness with a severity, and fixed the most serious ones first.</p>
         <div class="grid">
           <article class="card"><h3>A written security audit</h3><p>Every part of the system was mapped: who can call what, what each piece trusts, and what a hostile repository, a manipulated browser or a misled AI model could reach. Each weakness is ranked from critical to low, with the fix order.</p></article>
           <article class="card"><h3>Your GitHub token stays out of reach</h3><p>The most serious finding: during a push, a hostile repository could read the token. Now fetch and push happen in a separate container that runs no repository code, and a test plants every known trick (hooks, filters, proxies, helpers) to prove nothing sees it.</p></article>
@@ -458,7 +458,7 @@
     <section id="architect" class="section alt">
       <div class="wrap">
         <p class="eyebrow">Inspired by architect.new</p>
-        <h2>What I picked from architect.new, and how it fits Jr Architect</h2>
+        <h2>What I picked from architect.new, and how it fits Monarch</h2>
         <p class="sub">architect.new showed what an AI app builder should feel like. I took the ideas that matter most to someone who doesn't code and built them on the same foundations: a Go core and a MongoDB database, so the two think about apps, agents and data in the same way.</p>
         <div class="picked aligned">
           <div class="pick">
@@ -481,7 +481,7 @@
         <div class="picked">
           <div class="pick">
             <b>A consultant before code</b>
-            <p>architect.new starts by asking about your idea. Jr Architect does the same with a short interview of design decisions, each with a recommended answer, so a vague prompt still becomes a precise app.</p>
+            <p>architect.new starts by asking about your idea. Monarch does the same with a short interview of design decisions, each with a recommended answer, so a vague prompt still becomes a precise app.</p>
           </div>
           <div class="pick">
             <b>Plan, then agents, then app</b>
@@ -489,19 +489,19 @@
           </div>
           <div class="pick">
             <b>Agents built with the app</b>
-            <p>architect.new builds agents in Lyzr Studio alongside the app. Jr Architect builds them in Agent Hub and wires the app to them through webhooks, so the agents stay usable on their own afterwards.</p>
+            <p>architect.new builds agents in Lyzr Studio alongside the app. Monarch builds them in Agent Hub and wires the app to them through webhooks, so the agents stay usable on their own afterwards.</p>
           </div>
           <div class="pick">
             <b>Model-agnostic from the start</b>
-            <p>Lyzr's framework lets you choose the model. Jr Architect keeps that promise everywhere: per message, per agent and per workflow, with your own keys.</p>
+            <p>Lyzr's framework lets you choose the model. Monarch keeps that promise everywhere: per message, per agent and per workflow, with your own keys.</p>
           </div>
           <div class="pick">
             <b>Your code on GitHub</b>
-            <p>architect.new connects to GitHub. Jr Architect syncs both ways: open any repo, and push every built app to your account with a README.</p>
+            <p>architect.new connects to GitHub. Monarch syncs both ways: open any repo, and push every built app to your account with a README.</p>
           </div>
           <div class="pick">
             <b>Compatible with Lyzr apps</b>
-            <p>An app exported from Lyzr, recognised by its <code>workflow.json</code> or <code>response_schemas/</code>, is detected and runs in a Jr Architect sandbox as a Next.js app, so you can keep working on it in the IDE.</p>
+            <p>An app exported from Lyzr, recognised by its <code>workflow.json</code> or <code>response_schemas/</code>, is detected and runs in a Monarch sandbox as a Next.js app, so you can keep working on it in the IDE.</p>
           </div>
         </div>
       </div>
@@ -511,7 +511,7 @@
       <div class="wrap">
         <p class="eyebrow">What's next</p>
         <h2>Next: mobile apps you can install</h2>
-        <p class="sub">The same flow, from an idea to a working app, for phones. Describe the app, and install it on your own iPhone or Android device straight from Jr Architect.</p>
+        <p class="sub">The same flow, from an idea to a working app, for phones. Describe the app, and install it on your own iPhone or Android device straight from Monarch.</p>
         <div class="roadmap">
           <div class="road">
             <span class="road-n">1</span>
@@ -544,7 +544,7 @@
           <h2>Try it yourself</h2>
           <p class="live-lead">I'm on a free tier and I make the best of what I have. The platform runs on my own laptop and is shared through Tailscale Funnel, so it is only online while my laptop is open.</p>
           <div class="live-actions">
-            <a class="btn btn-lg" id="live-link" href="#" target="_blank" rel="noopener">Open Jr Architect</a>
+            <a class="btn btn-lg" id="live-link" href="#" target="_blank" rel="noopener">Open Monarch</a>
             <button class="btn btn-lg btn-ghost" type="button" id="beta-btn" aria-expanded="false" aria-controls="beta-box">Show beta code</button>
           </div>
           <div class="beta-box" id="beta-box" hidden>
@@ -553,7 +553,7 @@
           </div>
           <p class="ping-status" id="ping-status" role="status" aria-live="polite"></p>
           <div class="note">
-            <p><b>How this works.</b> Opening Jr Architect also sends me a notification on my phone, so if the laptop is asleep I can switch the tunnel on. If the page doesn't load yet, give it a few minutes and try again.</p>
+            <p><b>How this works.</b> Opening Monarch also sends me a notification on my phone, so if the laptop is asleep I can switch the tunnel on. If the page doesn't load yet, give it a few minutes and try again.</p>
             <p>To sign in, copy the beta code and paste it on the sign-in page, or continue with Google or GitHub. Every screenshot on this page is from the same build, so the walkthrough above shows exactly what you'll see.</p>
           </div>
           <p class="live-url"><code id="live-url-text"></code></p>
@@ -564,8 +564,8 @@
 
   <footer class="foot">
     <div class="wrap foot-in">
-      <span><span class="logo sm">Jr</span> Jr Architect · built by Vivan Rajath</span>
-      <a href="https://github.com/VivanRajath/Jr-Architect" target="_blank" rel="noopener">GitHub</a>
+      <span><span class="logo sm">M</span> Monarch · built by Vivan Rajath</span>
+      <a href="https://github.com/VivanRajath/Monarch" target="_blank" rel="noopener">GitHub</a>
     </div>
   </footer>
 

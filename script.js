@@ -1,4 +1,4 @@
-// The public Tailscale Funnel address of the laptop running Jr Architect.
+// The public Tailscale Funnel address of the laptop running Monarch.
 const LIVE_URL = 'https://inspiron.tail958877.ts.net';
 
 // The "let me know" button posts to this ntfy.sh topic; subscribe to it in the ntfy app to get a phone notification.
@@ -27,9 +27,9 @@ liveLink.addEventListener('click', () => {
   const when = new Date().toLocaleString();
   const from = document.referrer ? ` (came from ${document.referrer})` : '';
   // A plain text POST needs no preflight; keepalive lets it finish while the new tab opens.
-  const url = `https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}?title=${encodeURIComponent('Someone is opening Jr Architect')}&tags=computer&priority=high`;
+  const url = `https://ntfy.sh/${encodeURIComponent(NTFY_TOPIC)}?title=${encodeURIComponent('Someone is opening Monarch')}&tags=computer&priority=high`;
   fetch(url, { method: 'POST', body: `A visitor opened the live demo at ${when}${from}. If the laptop is asleep, start the tunnel.`, keepalive: true }).catch(() => {});
-  pingStatus.textContent = "Opening Jr Architect in a new tab. If it doesn't load, I've been notified and will switch it on shortly.";
+  pingStatus.textContent = "Opening Monarch in a new tab. If it doesn't load, I've been notified and will switch it on shortly.";
 });
 
 const betaBtn = document.getElementById('beta-btn');
