@@ -35,8 +35,8 @@ p { margin: 0; }
 .nav { position: sticky; top: 0; z-index: 20; background: rgba(8, 9, 11, .78); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
 .nav-in { display: flex; align-items: center; justify-content: space-between; height: 60px; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; }
-.logo { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: #fff; color: #000; font-size: 12px; font-weight: 800; }
-.logo.sm { width: 22px; height: 22px; font-size: 10px; border-radius: 6px; margin-right: 6px; vertical-align: middle; }
+.logo { display: inline-block; width: 28px; height: 28px; border-radius: 8px; vertical-align: middle; }
+.logo.sm { width: 22px; height: 22px; border-radius: 6px; margin-right: 6px; }
 .links { display: flex; align-items: center; gap: 26px; font-size: 14px; }
 .links a { text-decoration: none; color: var(--muted); transition: color .15s; }
 .links a:hover { color: var(--text); }
