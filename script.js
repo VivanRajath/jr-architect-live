@@ -2,7 +2,7 @@
 const LIVE_URL = 'https://inspiron.tail958877.ts.net';
 
 // The "let me know" button posts to this ntfy.sh topic; subscribe to it in the ntfy app to get a phone notification.
-const NTFY_TOPIC = 'jr-architect-wake-m043xgr8s5';
+const NTFY_TOPIC = 'monarch-wake-m043xgr8s5';
 const PING_COOLDOWN_MS = 10 * 60 * 1000;
 
 // The shared beta code (JR_BETA_CODE on the server), shown to visitors so they can sign in.
