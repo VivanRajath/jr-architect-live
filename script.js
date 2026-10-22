@@ -5,8 +5,8 @@ const LIVE_URL = 'https://inspiron.tail958877.ts.net';
 const NTFY_TOPIC = 'monarch-wake-m043xgr8s5';
 const PING_COOLDOWN_MS = 10 * 60 * 1000;
 
-// The shared beta code (JR_BETA_CODE on the server), shown to visitors so they can sign in.
-const BETA_CODE = 'jr-0771ec14';
+// The shared beta code (MONARCH_BETA_CODE on the server), shown to visitors so they can sign in.
+const BETA_CODE = 'monarch-0771ec14';
 
 const liveLink = document.getElementById('live-link');
 liveLink.href = LIVE_URL;
@@ -19,11 +19,11 @@ links.addEventListener('click', (e) => { if (e.target.tagName === 'A') links.cla
 // Opening the demo also tells the owner someone wants to try it, at most once every ten minutes per visitor.
 const pingStatus = document.getElementById('ping-status');
 function lastPing() {
-  try { return Number(localStorage.getItem('jr-ping-at')) || 0; } catch { return 0; }
+  try { return Number(localStorage.getItem('monarch-ping-at')) || 0; } catch { return 0; }
 }
 liveLink.addEventListener('click', () => {
   if (Date.now() - lastPing() < PING_COOLDOWN_MS) return;
-  try { localStorage.setItem('jr-ping-at', String(Date.now())); } catch { /* storage blocked */ }
+  try { localStorage.setItem('monarch-ping-at', String(Date.now())); } catch { /* storage blocked */ }
   const when = new Date().toLocaleString();
   const from = document.referrer ? ` (came from ${document.referrer})` : '';
   // A plain text POST needs no preflight; keepalive lets it finish while the new tab opens.
